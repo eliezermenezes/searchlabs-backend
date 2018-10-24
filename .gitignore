@@ -1,0 +1,5 @@
+node_modules
+.project
+.idea
+.vscode
+.git
