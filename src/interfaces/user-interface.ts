@@ -1,9 +1,9 @@
 'use strict';
 
-import { User } from './../models/user';
+import { User } from '../models/attributes/user';
 
 export interface UserInterface {
 
-    create(data: User): Promise<User>;
+    create(dataRequest: User): Promise<User>;
     getAll(): Promise<User[]>;
 }

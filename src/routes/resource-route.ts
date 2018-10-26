@@ -1,15 +1,15 @@
 'use strict';
 
 import { Router } from 'express';
-import { ClassController } from '../controllers/class-controller';
+import { ResourceController } from './../controllers/resource-controller';
 
-export class ClassRoute {
+export class ResourceRoute {
     public router: Router;
-    public _controller: ClassController;
+    public _controller: ResourceController;
 
     constructor() {
         this.router = Router();
-        this._controller = new ClassController();
+        this._controller = new ResourceController();
         this.onInit();
     }
 
@@ -19,6 +19,6 @@ export class ClassRoute {
     }
 }
 
-const classRoute = new ClassRoute();
-classRoute.onInit();
-export default classRoute.router;
+const resourceRoute = new ResourceRoute();
+resourceRoute.onInit();
+export default resourceRoute.router;

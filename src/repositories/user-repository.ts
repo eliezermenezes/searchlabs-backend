@@ -1,18 +1,30 @@
 'use struict';
 
 import { UserInterface } from './../interfaces/user-interface';
-import { User } from './../models/user';
+import { User } from '../models/attributes/user';
 
-const { users } = require('../models');
+const { user, classe } = require('../models/associations');
 
 export class UserRepository implements UserInterface {
-    
-    public async create(data: User): Promise<User> {
-        return await users.create(data);
+
+    public async create(dataRequest: User): Promise<User> {
+        return await user.create(dataRequest);
     }
 
     public async getAll(): Promise<User[]> {
-        return await users.findAll();
+        return await user.findAll({
+            include: [{
+                model: classe,
+                as: 'classes'
+            },
+            {
+                model: classe,
+                as: 'turmas'
+            }],
+            where: {
+                status: 'active'
+            }
+        });
     }
 }
 

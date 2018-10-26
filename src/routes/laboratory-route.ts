@@ -1,15 +1,15 @@
 'use strict';
 
 import { Router } from 'express';
-import { ClassController } from '../controllers/class-controller';
+import { LaboratoryController } from '../controllers/laboratory-controller';
 
-export class ClassRoute {
+export class LaboratoryRoute {
     public router: Router;
-    public _controller: ClassController;
+    public _controller: LaboratoryController;
 
     constructor() {
         this.router = Router();
-        this._controller = new ClassController();
+        this._controller = new LaboratoryController();
         this.onInit();
     }
 
@@ -19,6 +19,6 @@ export class ClassRoute {
     }
 }
 
-const classRoute = new ClassRoute();
-classRoute.onInit();
-export default classRoute.router;
+const labRoute = new LaboratoryRoute();
+labRoute.onInit();
+export default labRoute.router;

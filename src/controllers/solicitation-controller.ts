@@ -1,29 +1,25 @@
 'use strict';
 
 import { Request, Response, NextFunction } from 'express';
-import ClassRepository from '../repositories/class-repository';
+import SolicitationRepository from '../repositories/solicitation-repository';
 
-export class ClassController {
+export class SolicitationController {
 
     public async post(request: Request, response: Response, next: NextFunction) {
         try {
-
-            
-            let createdClass = await ClassRepository.create(request.body);
-
-            
-            response.status(200).send(createdClass);
+            let registedSolicitation = await SolicitationRepository.register(request.body);
+            response.status(200).send(registedSolicitation);
         } catch (e) {
             response.send({
-                message: 'Não foi possível cadastrar essa classe.'
+                message: 'Não foi possível registrar essa solicitação.'
             });
         }
     }
 
     public async get(request: Request, response: Response, next: NextFunction) {
         try {
-            let classes = await ClassRepository.getAll();
-            response.status(200).send(classes);
+            let solicitations = await SolicitationRepository.getAll();
+            response.status(200).send(solicitations);
         } catch (e) {
             response.status(500).send({
                 message: 'Falha ao processar sua requisição.'
