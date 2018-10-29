@@ -18,8 +18,33 @@ export class UserController {
 
     public async get(request: Request, response: Response, next: NextFunction) {
         try {
-            let users = await UserRepository.getAll();
+
+            const params = request.body;
+            let name = params.name !== undefined ? params.name : '';
+
+            if (params.name !== undefined && params.name !== null) {
+                name = params.name;
+            }
+            
+            let users = await UserRepository.getAll(name);
             response.status(200).send(users);
+        } catch (e) {
+            response.status(500).send({
+                message: 'Falha ao processar sua requisição.'
+            });
+        }
+    }
+
+    public async getById(request: Request, response: Response, next: NextFunction) {
+        try {
+            let user = await UserRepository.getUser(request.params.id);
+            if (user == null) {
+                response.status(200).send({
+                    message: 'Usuário não encontrado.'
+                });
+            } else {
+                response.status(200).send(user);
+            }
         } catch (e) {
             response.status(500).send({
                 message: 'Falha ao processar sua requisição.'

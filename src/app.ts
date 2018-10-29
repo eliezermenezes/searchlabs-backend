@@ -12,6 +12,7 @@ import ResourceRoute from './routes/resource-route';
 import TopicRoute from './routes/topic-route';
 import ClassUserRoute from './routes/class_user-route';
 import SolicitationRoute from './routes/solicitation-route';
+import { Cors } from './middleware/cors';
 
 class App {
     public express: express.Application;
@@ -27,9 +28,11 @@ class App {
     private middleware(): void {
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
+        this.express.use(Cors.prototype.setHeaders);
     }
 
     private endpoints(): void {
+
         this.express.use('/', APIRoute);
 
         // Users

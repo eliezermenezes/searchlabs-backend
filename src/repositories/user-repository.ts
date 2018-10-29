@@ -11,7 +11,7 @@ export class UserRepository implements UserInterface {
         return await user.create(dataRequest);
     }
 
-    public async getAll(): Promise<User[]> {
+    public async getAll(name: string): Promise<User[]> {
         return await user.findAll({
             include: [{
                 model: classe,
@@ -22,8 +22,17 @@ export class UserRepository implements UserInterface {
                 as: 'turmas'
             }],
             where: {
-                status: 'active'
+                status: 'active',
             }
+        });
+    }
+
+    public async getUser(id: number): Promise<User> {
+        return await user.findByPk(id, {
+            include: [{
+                model: classe,
+                as: 'classes'
+            }]
         });
     }
 }
