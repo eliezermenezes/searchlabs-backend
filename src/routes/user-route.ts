@@ -17,6 +17,7 @@ export class UserRoute {
         this.router.get('/', this._controller.get);
         this.router.post('/add', this._controller.post);
         this.router.get('/:id', this._controller.getById);
+        this.router.get('/class/:id/students', this._controller.getStudentsByClass);
     }
 }
 

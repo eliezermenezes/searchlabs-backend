@@ -19,6 +19,23 @@ export class TopicRepository implements TopicInterface {
             }]
         });
     }
+
+    public async getById(id: number): Promise<Topic> {
+        return await topic.findByPk(id, {
+            include: [{
+                model: classe,
+                as: 'class'
+            }]
+        });
+    }
+
+    public async getByClass(class_id: number): Promise<Topic[]> {
+        return await topic.findAll({
+            where: {
+                class_id: class_id
+            }
+        });
+    }
 }
 
 export default new TopicRepository();

@@ -2,7 +2,7 @@
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('occupation_map', {
+        return queryInterface.createTable('occupation_maps', {
             id: {
                 allowNull: false,
                 primaryKey: true,

@@ -11,19 +11,13 @@ export class UserRepository implements UserInterface {
         return await user.create(dataRequest);
     }
 
-    public async getAll(name: string): Promise<User[]> {
+    public async getAll(filter: Array<Object>): Promise<User[]> {
         return await user.findAll({
+            where: filter,
             include: [{
                 model: classe,
                 as: 'classes'
-            },
-            {
-                model: classe,
-                as: 'turmas'
-            }],
-            where: {
-                status: 'active',
-            }
+            }]
         });
     }
 
@@ -33,6 +27,15 @@ export class UserRepository implements UserInterface {
                 model: classe,
                 as: 'classes'
             }]
+        });
+    }
+
+    public async getStudentsByClass(classid: number): Promise<User[]> {
+        return await classe.findByPk(classid, {
+            include: {
+                model: user,
+                as: 'students'
+            }
         });
     }
 }

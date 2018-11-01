@@ -16,6 +16,7 @@ export class LaboratoryRoute {
     public onInit(): void {
         this.router.get('/', this._controller.get);
         this.router.post('/add', this._controller.post);
+        this.router.get('/:id', this._controller.getById);
     }
 }
 

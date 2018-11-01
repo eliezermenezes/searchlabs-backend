@@ -11,12 +11,22 @@ export class LaboratoryRepository implements LaboratoryInterface {
         return await laboratories.create(dataRequest);
     }
 
-    public async getAll(): Promise<Laboratory[]> {
+    public async getAll(filter: Array<Object>): Promise<Laboratory[]> {
         return await laboratories.findAll({
+            where: filter,
             include: [{
                 model: resource,
                 as: 'resources'
             }]
+        });
+    }
+
+    public async getById(id: number): Promise<Laboratory> {
+        return await laboratories.findByPk(id, {
+            include: {
+                model: resource,
+                as: 'resources'
+            }
         });
     }
 }

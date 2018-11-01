@@ -2,12 +2,13 @@
 
 import { Request, Response, NextFunction } from 'express';
 import UserRepository from '../repositories/user-repository';
+import { filterUser } from './../utils/user-filter.utils';
 
 export class UserController {
 
     public async post(request: Request, response: Response, next: NextFunction) {
         try {
-            let createdUser = await UserRepository.create(request.body);
+            const createdUser = await UserRepository.create(request.body);
             response.status(200).send(createdUser);
         } catch (e) {
             response.send({
@@ -17,16 +18,11 @@ export class UserController {
     }
 
     public async get(request: Request, response: Response, next: NextFunction) {
-        try {
 
-            const params = request.body;
-            let name = params.name !== undefined ? params.name : '';
-
-            if (params.name !== undefined && params.name !== null) {
-                name = params.name;
-            }
-            
-            let users = await UserRepository.getAll(name);
+        const filter = new filterUser(request);
+  
+        try {    
+            const users = await UserRepository.getAll(filter.get());
             response.status(200).send(users);
         } catch (e) {
             response.status(500).send({
@@ -37,7 +33,7 @@ export class UserController {
 
     public async getById(request: Request, response: Response, next: NextFunction) {
         try {
-            let user = await UserRepository.getUser(request.params.id);
+            const user = await UserRepository.getUser(request.params.id);
             if (user == null) {
                 response.status(200).send({
                     message: 'Usuário não encontrado.'
@@ -46,6 +42,24 @@ export class UserController {
                 response.status(200).send(user);
             }
         } catch (e) {
+            response.status(500).send({
+                message: 'Falha ao processar sua requisição.'
+            });
+        }
+    }
+
+    public async getStudentsByClass(request: Request, response: Response, next: NextFunction) {
+        try {
+            const students = await UserRepository.getStudentsByClass(request.params.id);
+
+            if (students == null) {
+                response.status(200).send({
+                    message: 'Nenhum estudante nesta classe.'
+                });
+            } else {
+                response.status(200).send(students);
+            }
+        } catch (error) {
             response.status(500).send({
                 message: 'Falha ao processar sua requisição.'
             });

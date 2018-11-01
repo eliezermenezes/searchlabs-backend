@@ -15,7 +15,9 @@ export class ClassRoute {
 
     public onInit(): void {
         this.router.get('/', this._controller.get);
-        this.router.post('/add', this._controller.post);
+        this.router.post('/add', this._controller.get);
+        this.router.get('/by/teacher', this._controller.getByTeacher);
+        this.router.get('/:id', this._controller.getById);
     }
 }
 

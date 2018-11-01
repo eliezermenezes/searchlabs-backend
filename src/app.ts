@@ -3,6 +3,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
+const { check } = require('express-validator/check');
+
 // importação das ROTAS
 import APIRoute from './routes/api-route';
 import UserRoute from './routes/user-route';
@@ -13,6 +15,7 @@ import TopicRoute from './routes/topic-route';
 import ClassUserRoute from './routes/class_user-route';
 import SolicitationRoute from './routes/solicitation-route';
 import { Cors } from './middleware/cors';
+import ReservationRoute from "./routes/reservation-route";
 
 class App {
     public express: express.Application;
@@ -20,7 +23,7 @@ class App {
 
     constructor() {
         this.express = express();
-        this.sufix_api = '/api/'
+        this.sufix_api = '/api/';
         this.middleware();
         this.endpoints();
     }
@@ -36,25 +39,28 @@ class App {
         this.express.use('/', APIRoute);
 
         // Users
-        this.express.use(`${this.sufix_api}user`, UserRoute);
+        this.express.use(`${this.sufix_api}users`, UserRoute);
 
         // Laboratories
-        this.express.use(`${this.sufix_api}laboratory`, LaboratoryRoute);
+        this.express.use(`${this.sufix_api}laboratories`, LaboratoryRoute);
 
         // Classes
-        this.express.use(`${this.sufix_api}class`, ClassRoute);
+        this.express.use(`${this.sufix_api}classes`, ClassRoute);
 
         // Resources
-        this.express.use(`${this.sufix_api}resource`, ResourceRoute);
+        this.express.use(`${this.sufix_api}resources`, ResourceRoute);
 
         // Topics
-        this.express.use(`${this.sufix_api}topic`, TopicRoute);
+        this.express.use(`${this.sufix_api}topics`, TopicRoute);
 
         // Classes Users
         this.express.use(`${this.sufix_api}associate`, ClassUserRoute);
 
         // Solicitations
-        this.express.use(`${this.sufix_api}solicitation`, SolicitationRoute);
+        this.express.use(`${this.sufix_api}solicitations`, [check('class_id').isEmail()], SolicitationRoute);
+
+        // Reservations
+        this.express.use(`${this.sufix_api}reservations`, ReservationRoute);
     }
 }
 
