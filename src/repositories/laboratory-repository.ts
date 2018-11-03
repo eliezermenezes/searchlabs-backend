@@ -1,4 +1,4 @@
-'use struict';
+'use strict';
 
 import { LaboratoryInterface } from './../interfaces/laboratory-interface';
 import { Laboratory } from '../models/attributes/laboratory';

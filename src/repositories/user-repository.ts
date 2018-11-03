@@ -1,4 +1,4 @@
-'use struict';
+'use strict';
 
 import { UserInterface } from './../interfaces/user-interface';
 import { User } from '../models/attributes/user';

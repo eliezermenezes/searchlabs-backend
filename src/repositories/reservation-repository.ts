@@ -1,47 +1,32 @@
-'use struict';
+'use strict';
 
 import { ReservationInterface } from "../interfaces/reservation-interface";
 import { Reservation } from "../models/attributes/reservation";
 import { ReservationUtils } from "./utils/reservation-utils";
 import { Solicitation } from "../models/attributes/solicitation";
-const { reservations, solicitation, occupation_maps } = require('../models/associations');
+import OccupationMapRepository from "./occupation_map-repository";
+import moment from "moment";
+const { reservations, solicitation } = require('../models/associations');
 
 export class ReservationRepository implements ReservationInterface {
 
-    public register(dataRequest: Solicitation): any {
-
-        reservations.create({solicitation_id: dataRequest.id}).then((response: any) => {
-
+    public async register(dataRequest: Solicitation | any): Promise<Reservation> {
+        return await reservations.create({solicitation_id: dataRequest.id}).then((response: any) => {
+            let data = ReservationUtils.setData(response, dataRequest);
             if (ReservationUtils.isRepeate(dataRequest.repeate || 'no')) {
 
+                const dataRepeate = ReservationUtils.dataRepeate(data, dataRequest);
+                const everyDay: Array<moment.Moment> = ReservationUtils.createArrayWithAllDates(dataRepeate.startDate, dataRepeate.endDate);
+                const everyDayValids: Array<moment.Moment> = ReservationUtils.getDatasValids(everyDay, dataRepeate.daysWeek);
+
+                everyDayValids.forEach((date: moment.Moment) => {
+                    data.date = date;
+                    OccupationMapRepository.add(data);
+                })
             } else {
-                occupation_maps.create({
-                    reservation_id: response.id,
-                    date: dataRequest.start_date,
-                    start_hour: dataRequest.start_hour,
-                    end_hour: dataRequest.end_hour
-                });
+                OccupationMapRepository.add(data);
             }
         });
-
-        /*
-        id      reservation_id	        date	        start_hour	        end_hour
-        */
-
-        /*
-        {
-             start_date: '2018-12-01',
-             end_date: '2018-12-01',
-             start_hour: '10:00:00',
-             end_hour: '11:45:00',
-             repeate: 'no',
-             days_week: null,
-             laboratory_id: 2,
-             class_id: 6
-          }
-        */
-
-        //return await reservations.create(dataRequest);
     }
 
     public async addObservation(id: number, observation: string): Promise<Reservation> {

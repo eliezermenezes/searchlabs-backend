@@ -1,9 +1,9 @@
-'use struict';
+'use strict';
 
 import { SolicitationInterface } from './../interfaces/solicitation-interface';
 import { Solicitation } from './../models/attributes/solicitation';
 import ReservationRepository from "./reservation-repository";
-import moment from 'moment';
+import { SolicitationUtils } from "./utils/SolicitationUtils";
 
 const { solicitation, laboratories, classe, user } = require('../models/associations');
 
@@ -13,7 +13,6 @@ export class SolicitationRepository implements SolicitationInterface {
         return await solicitation.create(dataRequest);
     }
 
-    // Falta
     public async update(id: number, dataRequest: Solicitation): Promise<Solicitation> {
         return await solicitation.find();
     }
@@ -50,7 +49,7 @@ export class SolicitationRepository implements SolicitationInterface {
 
     public async delete(id: number): Promise<Solicitation> {
         return await solicitation.findByPk(id).then((response: any) => {
-            if (response.situation === 'opened' || response.situation === 'accepted') {
+            if (SolicitationUtils.isOpenedOrAccepted(response.situation)) {
                 return false;
             }
             return response.update({
@@ -61,46 +60,36 @@ export class SolicitationRepository implements SolicitationInterface {
 
     public async cancel(id: number, description: string): Promise<Solicitation> {
         return await solicitation.findByPk(id).then((response: any) => {
-            if (response.situation !== 'opened') {
+            if (SolicitationUtils.isNotOpened(response.situation)) {
                 return false;
             }
             return response.update(
-                this.registerEvent('canceled', description)
+                SolicitationUtils.setSituation('canceled', description)
             );
         });
     }
 
     public async accept(id: number, description_answer: string): Promise<Solicitation> {
         return await solicitation.findByPk(id).then((response: any) => {
-            if (response.situation !== 'opened') {
+            if (SolicitationUtils.isNotOpened(response.situation)) {
                 return false;
             }
             ReservationRepository.register(response);
-
-
             return response.update(
-                this.registerEvent('accepted', description_answer)
+                SolicitationUtils.setSituation('accepted', description_answer)
             );
         });
     }
 
     public async refuse(id: number, description_answer: string): Promise<Solicitation> {
         return await solicitation.findByPk(id).then((response: any) => {
-            if (response.situation !== 'opened') {
+            if (SolicitationUtils.isNotOpened(response.situation)) {
                 return false;
             }
             return response.update(
-                this.registerEvent('refused', description_answer)
+                SolicitationUtils.setSituation('refused', description_answer)
             );
         });
-    }
-
-    private registerEvent(situation: string, description: string) {
-        return {
-            situation: situation,
-            answer_description: description,
-            answer_date: moment().format()
-        }
     }
 }
 

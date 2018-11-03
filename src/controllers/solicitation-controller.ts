@@ -2,7 +2,6 @@
 
 import { Request, Response, NextFunction } from 'express';
 import SolicitationRepository from '../repositories/solicitation-repository';
-var moment = require('moment');
 
 export class SolicitationController {
 
@@ -97,28 +96,8 @@ export class SolicitationController {
         }
     }
 
+
     public async accept(request: Request, response: Response, next: NextFunction) {
-
-        let datainicil = moment('2018-11-01');
-        let datafinal = moment('2018-11-30');
-
-        let datas = [];
-
-        let i = 0;
-        while ((datafinal.diff(datainicil, 'days')) > 0) {
-            datas[i] = datainicil;
-            if (i === 0) {
-                break;
-            }
-            i ++;
-            datainicil.add(1, 'days');
-        }
-
-        response.send({
-            message: datas
-        });
-        return;
-
         try {
             const solicitationAccepted = await SolicitationRepository.accept(request.params.id, request.body.answer_description);
             if (solicitationAccepted) {

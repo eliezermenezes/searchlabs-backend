@@ -1,4 +1,4 @@
-'use struict';
+'use strict';
 
 import { TopicInterface } from '../interfaces/topic-interface';
 import { Topic } from '../models/attributes/topic';

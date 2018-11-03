@@ -1,4 +1,4 @@
-'use struict';
+'use strict';
 
 import { ResourceInterface } from './../interfaces/resource-interface';
 import { Resource } from '../models/attributes/resource';
