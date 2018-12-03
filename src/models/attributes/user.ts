@@ -9,7 +9,7 @@ export class User {
     public phone?: string;
     public birthday?: Date;
     public gender?: string;
-    public avatar?: string;
+    public register?: string;
     public createdAt?: Date;
     public updatedAt?: Date;
 }

@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     Reservation.associate = (models) => {
         // Associação Solucitação
         Reservation.belongsTo(models.solicitation, { as: 'solicitation', foreignKey: 'solicitation_id' });
+
+        Reservation.hasMany(models.occupation_maps, { as: 'occupation_maps', foreignKey: 'reservation_id' });
     }
 
     return Reservation;

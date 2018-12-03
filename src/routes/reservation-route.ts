@@ -15,6 +15,7 @@ export class ReservationRoute {
 
     public onInit(): void {
         this.router.get('/', this._controller.get);
+        this.router.get('/by/laboratory/:laboratory', this._controller.getByLaboratory);
         this.router.get('/:id', this._controller.getById);
         this.router.patch('/:id/add_observation', this._controller.addObservacao);
         this.router.delete('/:id/delete', this._controller.delete);

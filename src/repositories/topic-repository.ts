@@ -32,8 +32,23 @@ export class TopicRepository implements TopicInterface {
     public async getByClass(class_id: number): Promise<Topic[]> {
         return await topic.findAll({
             where: {
-                class_id: class_id
+                class_id: class_id,
+                status: 'active'
             }
+        });
+    }
+
+    public async update(id: number, dataRequest: Topic): Promise<Topic> {
+        return await topic.findByPk(id).then((response: any) => {
+            return response.update(dataRequest);
+        });
+    }
+
+    public async delete(id: number): Promise<Topic> {
+        return await topic.findByPk(id).then((response: any) => {
+            return response.update({
+                status: 'inactive'
+            });
         });
     }
 }

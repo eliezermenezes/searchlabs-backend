@@ -17,7 +17,9 @@ export class TopicRoute {
         this.router.get('/', this._controller.get);
         this.router.post('/add', this._controller.post);
         this.router.get('/:id', this._controller.getById);
-        this.router.get('/by/class', this._controller.getByClass);
+        this.router.get('/by/class/:class', this._controller.getByClass);
+        this.router.patch('/:id', this._controller.patch);
+        this.router.delete('/:id/delete', this._controller.delete);
     }
 }
 

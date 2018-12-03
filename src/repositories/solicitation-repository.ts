@@ -4,21 +4,32 @@ import { SolicitationInterface } from './../interfaces/solicitation-interface';
 import { Solicitation } from './../models/attributes/solicitation';
 import ReservationRepository from "./reservation-repository";
 import { SolicitationUtils } from "./utils/SolicitationUtils";
+import { User } from "../models/attributes/user";
 
 const { solicitation, laboratories, classe, user } = require('../models/associations');
 
 export class SolicitationRepository implements SolicitationInterface {
 
     public async register(dataRequest: Solicitation): Promise<Solicitation> {
+        console.log(dataRequest);
         return await solicitation.create(dataRequest);
     }
 
     public async update(id: number, dataRequest: Solicitation): Promise<Solicitation> {
-        return await solicitation.find();
+        return await solicitation.findByPk(id).then((response: any) => {
+            return response.update(dataRequest);
+        });
     }
 
-    public async getAll(): Promise<Solicitation[]> {
+    public async getAll(filter: Array<Object>, teacher: User): Promise<Solicitation[]> {
+        let classFilter = [];
+        classFilter.push({status: 'active'});
+
+        if (teacher && teacher.role === 'teacher') {
+            classFilter.push({id: teacher.id});
+        }
         return await solicitation.findAll({
+            where: filter,
             include: [{
                 model: laboratories,
                 as: 'laboratory'
@@ -28,7 +39,8 @@ export class SolicitationRepository implements SolicitationInterface {
                 as: 'class',
                 include: [{
                     model: user,
-                    as: 'instructor'
+                    as: 'instructor',
+                    where: classFilter
                 }]
             }]
         });
@@ -42,7 +54,11 @@ export class SolicitationRepository implements SolicitationInterface {
             },
             {
                 model: classe,
-                as: 'class'
+                as: 'class',
+                include: [{
+                    model: user,
+                    as: 'instructor'
+                }]
             }]
         });
     }

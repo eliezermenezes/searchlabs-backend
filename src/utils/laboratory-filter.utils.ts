@@ -23,7 +23,7 @@ export class filterLaboratory {
             this.filter.push({ status: 'active' });
         }
 
-        if (params.name !== undefined) {
+        if (params.name) {
             this.filter.push({
                 name: {
                     [Sequelize.Op.like]: '%' + params.name + '%'
@@ -31,7 +31,7 @@ export class filterLaboratory {
             });
         }
 
-        if (params.localization !== undefined) {
+        if (params.localization) {
             this.filter.push({
                 localization: {
                     [Sequelize.Op.like]: '%' + params.localization + '%'
@@ -39,7 +39,7 @@ export class filterLaboratory {
             });
         }
 
-        if (params.situation !== undefined) {
+        if (params.situation) {
             this.filter.push({ situation: params.situation });
         }
     }

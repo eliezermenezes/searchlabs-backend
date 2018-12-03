@@ -3,8 +3,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-const { check } = require('express-validator/check');
-
 // importação das ROTAS
 import APIRoute from './routes/api-route';
 import UserRoute from './routes/user-route';
@@ -14,15 +12,21 @@ import ResourceRoute from './routes/resource-route';
 import TopicRoute from './routes/topic-route';
 import ClassUserRoute from './routes/class_user-route';
 import SolicitationRoute from './routes/solicitation-route';
-import { Cors } from './middleware/cors';
 import ReservationRoute from "./routes/reservation-route";
+import AuthRoute from "./routes/auth-route";
+
+import { Cors } from './middleware/cors';
+import { AuthController } from "./controllers/auth-controller";
 
 class App {
     public express: express.Application;
     public sufix_api: string;
+    public _auth: AuthController;
 
     constructor() {
         this.express = express();
+
+        this._auth = new AuthController();
         this.sufix_api = '/api/';
         this.middleware();
         this.endpoints();
@@ -36,7 +40,11 @@ class App {
 
     private endpoints(): void {
 
+        // Boas-vindas
         this.express.use('/', APIRoute);
+
+        // Authenticate
+        this.express.use(`${this.sufix_api}auth`, AuthRoute);
 
         // Users
         this.express.use(`${this.sufix_api}users`, UserRoute);
@@ -57,7 +65,7 @@ class App {
         this.express.use(`${this.sufix_api}associate`, ClassUserRoute);
 
         // Solicitations
-        this.express.use(`${this.sufix_api}solicitations`, [check('class_id').isEmail()], SolicitationRoute);
+        this.express.use(`${this.sufix_api}solicitations`, SolicitationRoute);
 
         // Reservations
         this.express.use(`${this.sufix_api}reservations`, ReservationRoute);

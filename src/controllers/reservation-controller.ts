@@ -2,6 +2,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import ReservationRepository from "../repositories/reservation-repository";
+import { ReservationFilter } from "../utils/reservation-filter";
 
 export class ReservationController {
 
@@ -34,9 +35,35 @@ export class ReservationController {
     }
 
     public async get(request: Request, response: Response, next: NextFunction) {
+
+        const filter = new ReservationFilter(request);
         try {
-            const reservations = await ReservationRepository.getAll();
-            response.status(200).send(reservations);
+            const reservations = await ReservationRepository.getAll(filter.get());
+            if (reservations.length === 0) {
+                response.status(404).send({
+                    message: 'results_not_found'
+                });
+            } else {
+                response.status(200).send(reservations);
+            }
+        } catch (e) {
+            response.status(500).send({
+                message: 'failed_to_process_your_request'
+            });
+        }
+    }
+
+    public async getByLaboratory(request: Request, response: Response, next: NextFunction) {
+
+        try {
+            const reservations = await ReservationRepository.getByLaboratory(request.params.laboratory);
+            if (reservations.length === 0) {
+                response.status(404).send({
+                    message: 'results_not_found'
+                });
+            } else {
+                response.status(200).send(reservations);
+            }
         } catch (e) {
             response.status(500).send({
                 message: 'failed_to_process_your_request'

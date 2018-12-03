@@ -16,8 +16,10 @@ export class ResourceRoute {
     public onInit(): void {
         this.router.get('/', this._controller.get);
         this.router.post('/add', this._controller.post);
-        this.router.get('/by/laboratory', this._controller.getByLaboratory);
+        this.router.get('/by/laboratory/:lab', this._controller.getByLaboratory);
         this.router.get('/:id', this._controller.getById);
+        this.router.patch('/:id', this._controller.patch);
+        this.router.delete('/:id/delete', this._controller.delete);
     }
 }
 

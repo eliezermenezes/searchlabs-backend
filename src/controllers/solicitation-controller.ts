@@ -2,12 +2,26 @@
 
 import { Request, Response, NextFunction } from 'express';
 import SolicitationRepository from '../repositories/solicitation-repository';
+import { SolicitationFilter } from "../utils/solicitation-filter";
 
 export class SolicitationController {
 
     public async post(request: Request, response: Response, next: NextFunction) {
+
+        let data = {
+            laboratory_id: request.body.laboratory.id,
+            class_id: request.body.class.id,
+            start_date: request.body.date.start,
+            end_date: request.body.date.end,
+            start_hour: request.body.schedule.start,
+            end_hour: request.body.schedule.end,
+            repeate: request.body.repeate,
+            days_week: request.body.repeate ? request.body.days_week : null,
+            observation: request.body.observation
+        };
+
         try {
-            const registedSolicitation = await SolicitationRepository.register(request.body);
+            const registedSolicitation = await SolicitationRepository.register(data);
             response.status(200).send(registedSolicitation);
         } catch (error) {
             response.status(500).send({
@@ -17,8 +31,20 @@ export class SolicitationController {
     }
 
     public async update(request: Request, response: Response, next: NextFunction) {
+
+        let data = {
+            laboratory_id: request.body.laboratory.id,
+            class_id: request.body.class.id,
+            start_date: request.body.date.start,
+            end_date: request.body.date.end,
+            start_hour: request.body.schedule.start,
+            end_hour: request.body.schedule.end,
+            repeate: request.body.repeate,
+            days_week: request.body.repeate ? request.body.days_week : null,
+            observation: request.body.observation
+        };
         try {
-            const solicitationUpdated = await SolicitationRepository.update(request.params.id, request.body);
+            const solicitationUpdated = await SolicitationRepository.update(request.params.id, data);
             if (solicitationUpdated == null) {
                 response.status(200).send({
                     message: 'could_not_update_solicitation'
@@ -33,10 +59,18 @@ export class SolicitationController {
         }
     }
 
-    public async get(request: Request, response: Response, next: NextFunction) {
+    public async get(request: Request | any, response: Response, next: NextFunction) {
+
+        const filter = new SolicitationFilter(request);
         try {
-            const solicitations = await SolicitationRepository.getAll();
-            response.status(200).send(solicitations);
+            const solicitations = await SolicitationRepository.getAll(filter.get(), request.data.user);
+            if (solicitations.length === 0) {
+                response.status(404).send({
+                    message: 'results_not_found'
+                });
+            } else {
+                response.status(200).send(solicitations);
+            }
         } catch (e) {
             response.status(500).send({
                 message: 'failed_to_process_your_request'

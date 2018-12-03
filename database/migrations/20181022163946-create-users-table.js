@@ -40,9 +40,11 @@ module.exports = {
                 type: Sequelize.ENUM,
                 values: ['male', 'female']
             },
-            avatar: {
-                allowNull: true,
-                type: Sequelize.STRING(250)
+            register: {
+                allowNull: false,
+                type: Sequelize.ENUM,
+                values: ['complete', 'incomplete'],
+                defaultValue: 'incomplete'
             },
             status: {
                 allowNull: false,

@@ -1,9 +1,8 @@
 'use strict';
 
 import { Request } from 'express';
-const Sequelize = require('sequelize');
 
-export class filterUser {
+export class ReservationFilter {
     public filter: Array<Object>;
     public request: Request;
 
@@ -23,18 +22,8 @@ export class filterUser {
             this.filter.push({ status: 'active' });
         }
 
-        this.filter.push({ register: 'complete' });
-
-        if (params.name) {
-            this.filter.push({
-                name: {
-                    [Sequelize.Op.like]: '%' + params.name + '%'
-                }
-            });
-        }
-
-        if (params.role) {
-            this.filter.push({ role: params.role });
+        if (params.situation) {
+            this.filter.push({ situation: params.situation });
         }
     }
 

@@ -9,11 +9,13 @@ export interface ReservationInterface {
 
     addObservation(id: number, observation: string): Promise<Reservation>;
 
-    getAll(): Promise<Reservation[]>;
+    getAll(filter: Array<Object>): Promise<Reservation[]>;
 
     getById(id: number): Promise<Reservation>
 
     delete(id: number): Promise<Reservation>;
 
     cancel(id: number): Promise<Reservation>;
+
+    getByLaboratory(laboratory: number): Promise<Reservation[]>;
 }

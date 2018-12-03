@@ -11,23 +11,28 @@ export class UserRepository implements UserInterface {
         return await user.create(dataRequest);
     }
 
-    public async getAll(filter: Array<Object>): Promise<User[]> {
-        return await user.findAll({
-            where: filter,
-            include: [{
-                model: classe,
-                as: 'classes'
-            }]
+    public async delete(id: number): Promise<boolean> {
+        return await user.findByPk(id).then((response: any) => {
+            return response.update({
+                status: 'inactive'
+            });
         });
     }
 
-    public async getUser(id: number): Promise<User> {
-        return await user.findByPk(id, {
-            include: [{
-                model: classe,
-                as: 'classes'
-            }]
+    public async update(id: number | any, dataRequest: User): Promise<User> {
+        return await user.findByPk(id).then((response: any) => {
+            return response.update(dataRequest);
         });
+    }
+
+    public async getUsers(filter: Array<Object>): Promise<User[]> {
+        return await user.findAll({
+            where: filter
+        });
+    }
+
+    public async getUserById(id: number): Promise<User> {
+        return await user.findByPk(id);
     }
 
     public async getStudentsByClass(classid: number): Promise<User[]> {
@@ -35,6 +40,15 @@ export class UserRepository implements UserInterface {
             include: {
                 model: user,
                 as: 'students'
+            }
+        });
+    }
+
+    public async getUserByUsername(username: string): Promise<User> {
+        return await user.findOne({
+            where: {
+                username: username,
+                status: 'active'
             }
         });
     }

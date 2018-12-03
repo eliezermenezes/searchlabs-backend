@@ -10,6 +10,7 @@ module.exports = {
             phone: '(92) 99212-4678',
             birthday: '1994-12-11',
             gender: 'male',
+            register: 'complete',
             createdAt: new Date(),
             updatedAt: new Date()
         }], {});

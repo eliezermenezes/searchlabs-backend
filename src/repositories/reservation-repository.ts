@@ -6,7 +6,7 @@ import { ReservationUtils } from "./utils/reservation-utils";
 import { Solicitation } from "../models/attributes/solicitation";
 import OccupationMapRepository from "./occupation_map-repository";
 import moment from "moment";
-const { reservations, solicitation } = require('../models/associations');
+const { reservations, solicitation, laboratories, classe, occupation_maps } = require('../models/associations');
 
 export class ReservationRepository implements ReservationInterface {
 
@@ -37,12 +37,20 @@ export class ReservationRepository implements ReservationInterface {
         });
     }
 
-    public async getAll(): Promise<Reservation[]> {
+    public async getAll(filter: Array<Object>): Promise<Reservation[]> {
         return await reservations.findAll({
-            include: [{
+            where: filter,
+            include: {
                 model: solicitation,
-                as: 'solicitation'
-            }]
+                as: 'solicitation',
+                include: [{
+                    model: laboratories,
+                    as: 'laboratory'
+                },{
+                    model: classe,
+                    as: 'class'
+                }]
+            }
         });
     }
 
@@ -51,6 +59,31 @@ export class ReservationRepository implements ReservationInterface {
             include: [{
                 model: solicitation,
                 as: 'solicitation'
+            }]
+        });
+    }
+
+    public async getByLaboratory(laboratory: number): Promise<Reservation[]> {
+        return await reservations.findAll({
+            where: {
+                status: 'active'
+            },
+            include: [{
+                model: solicitation,
+                as: 'solicitation',
+                where: {
+                    laboratory_id: laboratory
+                },
+                include: [{
+                    model: laboratories,
+                    as: 'laboratory'
+                }, {
+                    model: classe,
+                    as: 'class'
+                }]
+            }, {
+                model: occupation_maps,
+                as: 'occupation_maps'
             }]
         });
     }

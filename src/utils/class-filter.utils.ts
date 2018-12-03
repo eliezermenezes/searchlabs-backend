@@ -3,11 +3,11 @@
 import { Request } from 'express';
 const Sequelize = require('sequelize');
 
-export class filterUser {
+export class filterClass {
     public filter: Array<Object>;
-    public request: Request;
+    public request: Request | any;
 
-    constructor(request: Request) {
+    constructor(request: Request | any) {
         this.filter = [];
         this.request = request;
 
@@ -17,13 +17,11 @@ export class filterUser {
     public add() {
         const params = this.request.body;
 
-        if (params.status) {
+        if (params.status !== undefined) {
             this.filter.push({ status: params.status });
         } else {
             this.filter.push({ status: 'active' });
         }
-
-        this.filter.push({ register: 'complete' });
 
         if (params.name) {
             this.filter.push({
@@ -33,8 +31,20 @@ export class filterUser {
             });
         }
 
-        if (params.role) {
-            this.filter.push({ role: params.role });
+        if (params.institution) {
+            this.filter.push({
+                institution: {
+                    [Sequelize.Op.like]: '%' + params.institution + '%'
+                }
+            });
+        }
+
+        if (params.situation) {
+            this.filter.push({ situation: params.situation });
+        }
+
+        if (this.request.data.user.role === 'teacher') {
+            this.filter.push({ teacher: this.request.data.user.id });
         }
     }
 
