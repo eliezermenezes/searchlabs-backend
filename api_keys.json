@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "searchlabs-project",
+  "private_key_id": "06c7350947c3ff83a8a570f5f3acf3f214248a93",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCq1WQxfrji3nwO\nohS4Dy9+O51Hhs/1D79jElFK+E+NKfg8HVKwBh93y1JQgkXS3bWlTStHPm/FgL82\nNo+dADMgD/kQ3a0CLMxxRfIbAwHxin9I1LMSzoYVkizwCmnTpNBW/aOkJcdyMxdg\nfTYY6QjF70qLBVKg+0xCU/Oaz+fu4QNvhvA7t7shEzRtp7textmM5Nt4RbEhjYV5\n5AWnT4MLsF+tc2XxTI3ytgJYO/dmV3z+aluJ0haRlBxk2aZC3fibl0AAygQftQ+L\nfYCP9llkWXb5JgfYsxoZCkRMPtlSEsuIg1AHIhsIJ208M284AxfFHXIOgUBML1b7\ncoXFafjpAgMBAAECggEAJHj6szaC8qzdf6JLGiDj2uePZL37mC6MhfJbOM5a7aCQ\nRwVbqgkknsbiBB5MGgELzwbyvnsuEdSy/jgX4UUxpR7D5j3tuhEmdOiiD/JMb+1J\nz5rZwKInLmPPBFC012LQuEHetiT6t/8AdrFE43ydSuUT3Sp9wbDlTyPtVpgcxHsc\naDkj7R09UfT+9fVAqOlBMqILvMoUTC+2rks2KgjXm3a4zloF60sgBiPUlixkyG0q\n290CEy+xleul2iFeBzFEjkI7TyiWoBNHgRInRT/wD1m14gg7700vnhGswzmNO2K8\nRDudStlZjGnpEfblj6u/CmW8vp4apcLp7Z3vnhubIQKBgQDfxw2e/W2JDiVBDhtl\n74GPYAhSG4GCSMdDVtKd8KlsJ97lZnnolLNsQ9lp7Z16jCvAdsWsRIXgu091/z92\nOhbcS8vP9xe9fEinyj/B8d21I/NPJxsqAapPBCYyqDrVQuM5BElUEj3kvL9/GCxG\nEyvm3cBnJhw8ikgOveQL7zKKvwKBgQDDbrPvgCJ8JssZFR2Ostu4Bwnw3edwKMPd\nLbfkUv1LpoUkHoZdgJX/Q1snrOgOsby6djpP1ZXkpUj41+5Y3HDUmXDOa7FKuX2J\nx4E28bAJZ+LpsP9XMEyVAwKbuUUkUQ15gZgSYRVPzcH+URw/ICICZGv87EtgfCFA\nCLg95dGuVwKBgGIZZvU98BjXJKnCP2yOdGOgG8Wy3TF6KjBxDV/DsuIBEIvMQsEc\n/xMFI3h2fETO0hdLehis6Wu9cXYu8WkoygDFEZIXpkahB1DXLuAc4a6ZFf6rDBN8\nK2b8UKqAaVo4OlgyctryLEPsIp7av/3wRZyttb0CTfqUPEaKJEC/GY8NAoGBAKay\nnb6zYDbf7Cs37J9UhsABGQSgcxIjY3Yc0hdqhm3p2vVFKD1HOiqi7HT6MnKePqoZ\nwIFqYNHH/mdr3/1iAsgFHcik6XQgpilIyDnyi8JqH45QEGzxYNFV4PqtXIGutTyo\nQuuibchFbKydyOc7ZGb/+3CgqWbiWoZBKc56YpE/AoGAeeKVe3W75gU5y8ZrE3nB\nqTAL9m/4xvEVpYtk0orXrOA0mS0CPHeO4XS4mEaAMDxZmmJ8VuCfThiaEsFvw0dD\nwb4sWRLNq6zppEE0c6soy91mbFd8DMiw6oavWKndaQ9AJ7qbA9PBPrP2Iu4bhsoQ\nwH6Us0RX2DSz0PbdQPMFeZ4=\n-----END PRIVATE KEY-----\n",
+  "client_email": "searchlabs@searchlabs-project.iam.gserviceaccount.com",
+  "client_id": "115559635218875870057",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/searchlabs%40searchlabs-project.iam.gserviceaccount.com"
+}

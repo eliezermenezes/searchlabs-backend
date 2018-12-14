@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         days_week   : DataTypes.STRING,
         observation : DataTypes.STRING,
         situation   : DataTypes.STRING,
-        answer_date : DataTypes.DATEONLY,
+        answer_date : DataTypes.DATE,
         answer_description: DataTypes.STRING,
         status      : DataTypes.STRING
     }, {});

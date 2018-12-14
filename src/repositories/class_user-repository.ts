@@ -1,4 +1,4 @@
-'use struict';
+'use strict';
 
 import { ClassUserInterface } from '../interfaces/class_user-interface';
 import { ClassUser } from '../models/attributes/class_user';

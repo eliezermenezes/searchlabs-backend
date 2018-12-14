@@ -1,4 +1,4 @@
-'use struict';
+'use strict';
 
 import { TopicInterface } from '../interfaces/topic-interface';
 import { Topic } from '../models/attributes/topic';
@@ -17,6 +17,38 @@ export class TopicRepository implements TopicInterface {
                 model: classe,
                 as: 'class'
             }]
+        });
+    }
+
+    public async getById(id: number): Promise<Topic> {
+        return await topic.findByPk(id, {
+            include: [{
+                model: classe,
+                as: 'class'
+            }]
+        });
+    }
+
+    public async getByClass(class_id: number): Promise<Topic[]> {
+        return await topic.findAll({
+            where: {
+                class_id: class_id,
+                status: 'active'
+            }
+        });
+    }
+
+    public async update(id: number, dataRequest: Topic): Promise<Topic> {
+        return await topic.findByPk(id).then((response: any) => {
+            return response.update(dataRequest);
+        });
+    }
+
+    public async delete(id: number): Promise<Topic> {
+        return await topic.findByPk(id).then((response: any) => {
+            return response.update({
+                status: 'inactive'
+            });
         });
     }
 }

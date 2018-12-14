@@ -4,12 +4,12 @@ module.exports = {
     up: (queryInterface) => {
         return queryInterface.bulkInsert('users', [{
             username: 'eliezermenezes19@gmail.com',
-            name: 'Eliezer dos Santos',
-            family_name: 'Menezes',
+            name: 'ELIEZER DOS SANTOS',
+            family_name: 'MENEZES',
             role: 'administrator',
             phone: '(92) 99212-4678',
-            birthday: '1994-12-11',
             gender: 'male',
+            register: 'complete',
             createdAt: new Date(),
             updatedAt: new Date()
         }], {});
