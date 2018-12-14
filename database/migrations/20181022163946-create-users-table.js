@@ -31,10 +31,6 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.STRING(15)
             },
-            birthday: {
-                allowNull: true,
-                type: Sequelize.DATEONLY
-            },
             gender: {
                 allowNull: true,
                 type: Sequelize.ENUM,

@@ -6,7 +6,7 @@ import { ReservationUtils } from "./utils/reservation-utils";
 import { Solicitation } from "../models/attributes/solicitation";
 import OccupationMapRepository from "./occupation_map-repository";
 import moment from "moment";
-const { reservations, solicitation, laboratories, classe, occupation_maps } = require('../models/associations');
+const { reservations, solicitation, laboratories, classe, occupation_maps, user } = require('../models/associations');
 
 export class ReservationRepository implements ReservationInterface {
 
@@ -48,7 +48,11 @@ export class ReservationRepository implements ReservationInterface {
                     as: 'laboratory'
                 },{
                     model: classe,
-                    as: 'class'
+                    as: 'class',
+                    include: [{
+                        model: user,
+                        as: 'instructor'
+                    }]
                 }]
             }
         });

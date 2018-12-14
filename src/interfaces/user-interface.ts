@@ -10,4 +10,5 @@ export interface UserInterface {
     getUserById(id: number): Promise<User>;
     getStudentsByClass(classid: number): Promise<User[]>;
     delete(id: number): Promise<boolean>;
+    getUserByUsername(username: string): Promise<User>;
 }
